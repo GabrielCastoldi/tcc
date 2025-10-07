@@ -1,0 +1,78 @@
+/*Tela*/
+.cadastro-profissional-tela {
+  display: flex;
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/*Lado esquerdo*/
+.cadastro-esquerda {
+  flex: 1;
+  background-color: #00c2e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circulo-icone {
+  background-color: white;
+  border-radius: 50%;
+  padding: 40px;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circulo-icone img {
+  width: 60px;
+  height: 60px;
+}
+
+/*Lado direito*/
+.cadastro-direita {
+  flex: 1;
+  background-color: #fff;
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cadastro-direita h2 {
+  color: #00c2e0;
+  margin-bottom: 30px;
+}
+
+.cadastro-direita form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+}
+
+.cadastro-direita input {
+  margin-bottom: 15px;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #dcdcdc;
+  font-size: 16px;
+}
+
+/*Botão cadastrar*/
+.btn-cadastrar {
+  background-color: #00c2e0;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-cadastrar:hover {
+  background-color: #00a6c3;
+}

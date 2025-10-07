@@ -1,0 +1,102 @@
+/*Tela*/
+.relatorio-tela {
+  background-color: white;
+  min-height: 100vh;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/*Menu*/
+.relatorio-menu {
+  background-color: #00c2e0;
+  padding: 10px 5%; 
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+  flex-wrap: wrap; 
+}
+
+.btn-menu {
+  background-color: white;
+  color: #00c2e0;
+  border: none;
+  padding: 0.6em 1.5em; 
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 5px;
+  font-size: 1rem;
+}
+
+.btn-menu:hover {
+  color: #00a6c3;
+}
+
+/* Título */
+.titulo {
+  margin: 30px 0;
+  font-size: clamp(18px, 2vw, 22px); 
+  font-weight: bold;
+}
+
+/* Tabela */
+.tabela-relatorio {
+  width: 100%;
+  max-width: 1200px; 
+  margin: 0 auto;
+  border-collapse: collapse;
+  font-size: clamp(14px, 1.2vw, 16px); 
+}
+
+.tabela-relatorio-wrapper {
+  overflow-x: auto; 
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/*Cabeçalho da tabela*/
+.tabela-relatorio th {
+  background-color: white;
+  padding: 12px;
+  text-align: center;
+  border-bottom: 2px solid #ddd;
+}
+
+/*Células da tabela*/
+.tabela-relatorio td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+/*Botões*/
+.btn-notificar,
+.btn-exportar {
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-notificar {
+  background-color: #00c2e0;
+  color: white;
+  padding: 0.5em 1.5em;
+  font-size: 0.9rem;
+}
+
+.btn-notificar:hover,
+.btn-exportar:hover {
+  background-color: #00a6c3;
+}
+
+.btn-exportar {
+  background-color: #00c2e0;
+  color: white;
+  padding: 0.8em 2em;
+  font-size: 1rem;
+  margin: 30px auto;
+  display: block;
+}

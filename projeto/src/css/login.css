@@ -1,0 +1,106 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/*Tela*/
+.login-tela {
+  display: flex;
+  height: 100vh;
+}
+
+/*Lado esquerdo*/
+.login-esquerda {
+  flex: 1;
+  background-color: #00c2e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circulo-icone {
+  background-color: white;
+  border-radius: 50%;
+  padding: 40px;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circulo-icone img {
+  width: 60px;
+  height: 60px;
+}
+
+/*Lado direito*/
+.login-direita {
+  flex: 1;
+  background-color: #fff;
+  padding: 80px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-direita h2 {
+  color: #00c2e0;
+  margin-bottom: 40px;
+}
+
+.input-login {
+  width: 100%;
+  max-width: 350px;
+  background-color: #ececec;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.input-login .icon {
+  margin-right: 10px;
+  font-size: 18px;
+  color: #00c2e0;
+}
+
+.input-login input {
+  border: none;
+  outline: none;
+  background: transparent;
+  flex: 1;
+  font-size: 16px;
+}
+
+.btn-login {
+  background-color: #00c2e0;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-login:hover {
+  background-color: #00a6c3;
+}
+
+.link-cadastro {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.link-cadastro a {
+  color: #00c2e0;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.link-cadastro a:hover {
+  text-decoration: underline;
+}

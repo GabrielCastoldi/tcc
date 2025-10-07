@@ -1,0 +1,141 @@
+/*Tela*/
+.calendario-tela {
+  background-color: white;
+  min-height: 100vh;
+}
+
+.calendario-menu {
+  background-color: #00c2e0;
+  padding: 10px 50px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; 
+  box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+}
+
+.btn-menu {
+  background-color: white;
+  color: #00c2e0;
+  border: none;
+  padding: 0.6em 1.5em;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 5px;
+  font-size: 1rem;
+}
+
+.btn-menu:hover {
+  color: #00a6c3;
+}
+
+/*Lado esquerdo*/
+.calendario-titulo {
+  display: flex;
+  padding: 20px;
+}
+
+.calendario-esquerda {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.custom-calendario {
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.btn-nova-vacinacao {
+  background-color: #00c2e0;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-nova-vacinacao:hover {
+  background-color: #00a6c3;
+}
+
+/*Lado direito*/
+.calendario-direita {
+  flex: 1;
+}
+
+.calendario-direita h2 {
+  margin-bottom: 20px;
+  color: #000;
+  margin-top: 75px;
+}
+
+.calendario-direita ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 75px; 
+}
+
+.divisor {
+  border: none;
+  border-top: 2px solid #dcdcdc; 
+  margin: 20px 0; 
+}
+
+/*Calendario*/
+.react-calendar {
+  max-width: none !important; 
+  width: fit-content !important;
+  max-width: 900px;     
+  background-color: white;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  box-shadow: 0 0px 8px zrgba(0, 0, 0, 0.1);
+  margin: 0 auto; 
+  margin-bottom: 20px;
+
+}
+
+.react-calendar__month-view__days {
+  display: grid !important;
+  grid-template-columns: repeat(7, 120px) !important; /*7 colunas, cada uma com 120px*/
+  justify-content: center; 
+  gap: 6px; 
+}
+
+.react-calendar__tile {
+  height: 70px !important;
+  padding: 10px 10px !important;
+}
+
+/*Botões de navegação (setas e mês)*/
+.react-calendar__navigation button {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/*Dia selecionado*/
+.react-calendar__tile--active {
+  background: #00c2e0 !important;
+  color: white !important;
+  border-radius: 8px;
+}
+
+/*Dias ao passar o mouse*/
+.react-calendar__tile:enabled:hover {
+  background: #b3eaf4;
+  border-radius: 8px;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: inherit !important;
+}
+
+.react-calendar__month-view__weekdays abbr {
+  text-decoration: none !important;
+}
