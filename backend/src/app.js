@@ -8,6 +8,7 @@ const authRoutes = require('./routes/authRoutes');
 const vacinaRoutes = require('./routes/vacinaRoutes');
 const relatorioRoutes = require('./routes/relatorioRoutes');
 const notificacaoRoutes = require('./routes/notificacaoRoutes');
+const getPatientsRoutes = require('./routes/getPatient');
 const { iniciarServicoNotificacoes } = require('./services/notificationService');
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json());
 
 // Rotas da API
 app.use('/api/auth', authRoutes);
+app.use('/api/pacientes', getPatientsRoutes);
 app.use('/api/vacinas', vacinaRoutes);
 app.use('/api/relatorios', relatorioRoutes);
 app.use('/api/notificacoes', notificacaoRoutes);

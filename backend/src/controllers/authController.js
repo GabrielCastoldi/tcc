@@ -18,6 +18,21 @@ exports.cadastrarEnfermeira = async (req, res) => {
     }
 };
 
+// Função para cadastrar um novo paciente
+exports.cadastrarPaciente = async (req, res) => {
+    const { nome, cpf, telefone, idade } = req.body;
+
+    try {
+        await pool.query(
+            'INSERT INTO pacientes (nome, cpf, telefone, idade) VALUES (?, ?, ?, ?)',
+            [nome, cpf, telefone, idade]
+        );
+        res.status(201).json({ message: 'Cadastro realizado com sucesso.' }); 
+    } catch (error) {
+        res.status(500).json({ message: 'Erro no servidor.', error: error.message });
+    }
+};
+
 // Função de Login 
 exports.login = async (req, res) => {
     const { cpf, senha } = req.body;
