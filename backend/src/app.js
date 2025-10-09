@@ -7,7 +7,7 @@ require('dotenv').config();
 const authRoutes = require('./routes/authRoutes');
 const vacinaRoutes = require('./routes/vacinaRoutes');
 const relatorioRoutes = require('./routes/relatorioRoutes');
-const notificacaoRoutes = require('./routes/notificacaoRoutes'); // <-- ADICIONE ESTA LINHA
+const notificacaoRoutes = require('./routes/notificacaoRoutes');
 const { iniciarServicoNotificacoes } = require('./services/notificationService');
 
 const app = express();
@@ -19,7 +19,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/vacinas', vacinaRoutes);
 app.use('/api/relatorios', relatorioRoutes);
-app.use('/api/notificacoes', notificacaoRoutes); // <-- ADICIONE ESTA LINHA
+app.use('/api/notificacoes', notificacaoRoutes);
 
 // Inicia o serviço de verificação automática de notificações
 iniciarServicoNotificacoes();

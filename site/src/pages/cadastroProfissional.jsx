@@ -13,20 +13,48 @@ export default function CadastroProfissional() {
     senha: '',
     confirmarSenha: '',
   });
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Dados cadastrados:', form);
+    setError(''); 
+    setIsLoading(true); 
 
-    // Aqui pode fazer validação ou enviar os dados para a API
-    // Após o envio ou confirmação, redireciona para raiz ("/")
-    navigate('/'); // redireciona para a raiz da aplicação
+    if (form.senha !== form.confirmarSenha) {
+      setError('A senha e a confirmação de senha não coincidem.');
+      setIsLoading(false);
+      return;
+    }
+
+    const { confirmarSenha, ...dadosParaEnvio } = form;
+
+    try {
+      const response = await fetch('http://localhost:3333/api/auth/cadastrar-enfermeira', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dadosParaEnvio),
+      });
+
+      if (response.ok) {
+        navigate('/');
+      } else {
+        const data = await response.json();
+        setError(data.message || 'Erro ao cadastrar. Tente novamente.');
+      }
+    } catch (err) {
+      setError('Não foi possível conectar ao servidor. Tente mais tarde.');
+      console.error('Erro na requisição:', err);
+    } finally {
+      setIsLoading(false); 
+    }
   };
 
   return (
@@ -50,6 +78,7 @@ export default function CadastroProfissional() {
             placeholder="Nome completo"
             value={form.nome}
             onChange={handleChange}
+            required
           />
           <input
             type="text"
@@ -57,6 +86,7 @@ export default function CadastroProfissional() {
             placeholder="CPF"
             value={form.cpf}
             onChange={handleChange}
+            required
           />
           <input
             type="text"
@@ -64,6 +94,7 @@ export default function CadastroProfissional() {
             placeholder="Nº Coren"
             value={form.coren}
             onChange={handleChange}
+            required
           />
           <input
             type="text"
@@ -71,6 +102,7 @@ export default function CadastroProfissional() {
             placeholder="Telefone / Celular"
             value={form.telefone}
             onChange={handleChange}
+            required
           />
           <input
             type="text"
@@ -78,6 +110,7 @@ export default function CadastroProfissional() {
             placeholder="Código de acesso"
             value={form.codigo}
             onChange={handleChange}
+            required
           />
           <input
             type="password"
@@ -85,6 +118,7 @@ export default function CadastroProfissional() {
             placeholder="Senha"
             value={form.senha}
             onChange={handleChange}
+            required
           />
           <input
             type="password"
@@ -92,12 +126,15 @@ export default function CadastroProfissional() {
             placeholder="Confirmação de senha"
             value={form.confirmarSenha}
             onChange={handleChange}
+            required
           />
 
-          <button type="submit" className="btn-cadastrar">
-            CADASTRAR
+          <button type="submit" className="btn-cadastrar" disabled={isLoading}>
+            {isLoading ? 'CADASTRANDO...' : 'CADASTRAR'}
           </button>
         </form>
+
+        {error && <p className="error-message">{error}</p>}
       </div>
     </div>
   );

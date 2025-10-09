@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import '../css/CalendarioVacinacao.css';
 import { useNavigate } from 'react-router-dom';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
 
 export default function CalendarioVacinacao() {
   const navigate = useNavigate();
@@ -35,11 +33,7 @@ export default function CalendarioVacinacao() {
         <div className="calendario-esquerda">
           <h1>CALENDÁRIO DE VACINAÇÃO</h1>
 
-          <Calendar
-            onChange={setValue}
-            value={value}
-            className="custom-calendario"
-          />
+         
 
           <button className="btn-nova-vacinacao" onClick={handleNovaVacinacao}>
             NOVA VACINAÇÃO
