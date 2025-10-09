@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const pool = require('../config/database');
 
-// Função de Login 
+// Função de procurar paciente 
 exports.encontrarPaciente = async (req, res) => {
     const { cpf } = req.body;
     try {
@@ -16,7 +16,7 @@ exports.encontrarPaciente = async (req, res) => {
             expiresIn: '8h'
         });
 
-        res.status(200).json({ auth: true, token: token, tipo: enfermeiro.tipo });
+        res.status(200).json({ auth: true, token: token });
     } catch (error) {
         res.status(500).json({ message: 'Erro no servidor.', error: error.message });
     }
