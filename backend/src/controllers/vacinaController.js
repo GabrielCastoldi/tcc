@@ -29,20 +29,60 @@ exports.cadastrarVacina = async (req, res) => {
 
 // Função para consultar o calendário de vacinas do usuário 
 exports.consultarVacinas = async (req, res) => {
-    const { usuarioId } = req.params;
+    const { cpf } = req.params;
 
     try {
-        const [vacinas] = await pool.query('SELECT * FROM vacinas WHERE usuario_id = ? ORDER BY data_aplicacao DESC', [usuarioId]);
-        
-        // Lógica para identificar vacinas em atraso
+        const [pacientes] = await pool.query('SELECT id FROM pacientes WHERE cpf = ?', [cpf]);
+
+        if (pacientes.length === 0) {
+            return res.status(404).json({ message: 'Paciente não encontrado.' });
+        }
+
+        const [vacinas] = await pool.query(
+    'SELECT * FROM vacinas WHERE paciente_cpf = ? ORDER BY data_aplicacao DESC',
+    [cpf]
+);
+
+        if (vacinas.length === 0) {
+            return res.status(200).json({
+                message: 'Nenhuma vacina registrada para este paciente.',
+                calendario: [],
+                atrasadas: []
+            });
+        }
+
         const hoje = new Date();
-        const vacinasEmAtraso = vacinas.filter(v => v.status === 'AGENDADA' && new Date(v.proxima_dose_data) < hoje);
+
+        const vacinasEmAtraso = vacinas.filter(v =>
+            v.status === 'AGENDADA' &&
+            v.proxima_dose_data &&
+            new Date(v.proxima_dose_data) < hoje
+        );
+
+        const vacinasAgendadas = vacinas.filter(v =>
+            v.status === 'AGENDADA' &&
+            v.proxima_dose_data &&
+            new Date(v.proxima_dose_data) >= hoje
+        );
+
+        let situacao = '';
+
+        if (vacinasEmAtraso.length > 0) {
+            situacao = 'Existem vacinas em atraso.';
+        } else if (vacinasAgendadas.length > 0) {
+            situacao = 'Existem vacinas agendadas para o futuro.';
+        } else {
+            situacao = 'Todas as vacinas estão aplicadas e em dia.';
+        }
 
         res.status(200).json({
+            situacao,
             calendario: vacinas,
             atrasadas: vacinasEmAtraso
         });
+
     } catch (error) {
+        console.error('Erro ao consultar vacinas:', error);
         res.status(500).json({ message: 'Erro no servidor.', error: error.message });
     }
 };

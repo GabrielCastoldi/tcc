@@ -11,26 +11,24 @@ export default function Cpf() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-  
+    
     if (!cpf.trim()) { 
       setError('O CPF é obrigatório.');
-      setIsLoading(false); 
       return; 
     }
 
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3333/api/pacientes/encontrar-paciente', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ cpf }),
+      const response = await fetch(`http://localhost:3333/api/vacinas/${cpf}`, {
+        method: 'GET',
       });
 
       if (response.ok) {
-        navigate('/calendario-vacinacao');
+        const pacienteData = await response.json();
+        
+
+        navigate('/calendario-vacinacao', { state: { paciente: pacienteData } });
       } else {
         const data = await response.json();
         setError(data.message || 'Erro ao procurar. Tente novamente.');
@@ -74,18 +72,18 @@ export default function Cpf() {
         <h2>INFORME O CPF DO PACIENTE:</h2>
 
         <div className="input-cpf">
-          <input
-            type="text"
-            placeholder="CPF"
-            value={cpf}
-            onChange={(e) => setCpf(e.target.value)}
-          />
+            <input
+              type="text"
+              placeholder="CPF"
+              value={cpf}
+              onChange={(e) => setCpf(e.target.value)}
+            />
         </div>
 
-        {error && <p className="error-message">{error}</p>}
+            {error && <p className="error-message">{error}</p>}
         <button className="btn-cpf" type="submit" disabled={isLoading} onClick={handleSubmit}>
-        {isLoading ? 'BUSCANDO...' : 'BUSCAR'}
-        </button>
+              {isLoading ? 'BUSCANDO...' : 'BUSCAR'}
+            </button>
       </div>
     </div>
   );
