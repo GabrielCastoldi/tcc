@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { IoPersonSharp, IoLockClosedSharp } from 'react-icons/io5';
 import { useNavigate } from "react-router-dom";
 import seringa from '/images/seringa.png';
 import '../css/Login.css';
@@ -7,7 +6,39 @@ import '../css/Login.css';
 export default function Login() {
   const [cpf, setCpf] = useState('');
   const [senha, setSenha] = useState('');
-  const navigate = useNavigate();
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false); 
+  const navigate = useNavigate(); 
+
+  const handleLogin = async (event) => {
+    event.preventDefault(); 
+    setError(''); 
+    setIsLoading(true); 
+
+    try {
+      const response = await fetch('http://localhost:3333/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ cpf, senha })
+      });
+
+      if (response.ok) {
+        navigate('/cpf');
+      } 
+      else {
+        const data = await response.json();
+        setError(data.message || 'Falha no login. Verifique suas credenciais.');
+      }
+    } catch (err) {
+      setError('Erro ao conectar ao servidor. Tente novamente mais tarde.');
+      console.error('Erro na requisição de login:', err);
+    } finally {
+      setIsLoading(false); 
+    }
+  };
+
 
   return (
     <div className="login-tela">
@@ -20,28 +51,33 @@ export default function Login() {
       <div className="login-direita">
         <h2>ENTRAR</h2>
 
-        <div className="input-login">
-          <IoPersonSharp className="icon" />
-          <input
-            type="text"
-            placeholder="CPF"
-            value={cpf}
-            onChange={(e) => setCpf(e.target.value)}
-          />
-        </div>
+        <form onSubmit={handleLogin}>
+          <div className="input-login">
+            <input
+              type="text"
+              placeholder="CPF"
+              value={cpf}
+              onChange={(e) => setCpf(e.target.value)}
+              required
+            />
+          </div>
 
-        <div className="input-login">
-          <IoLockClosedSharp   className="icon" />
+          <div className="input-login">
+            <input
+              type="password"
+              placeholder="SENHA"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+              required
+            />
+          </div>
 
-          <input
-            type="password"
-            placeholder="SENHA"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-          />
-        </div>
+          <button className="btn-login" type="submit" disabled={isLoading}>
+            {isLoading ? 'ENTRANDO...' : 'ENTRAR'}
+          </button>
+        </form>
 
-        <button className="btn-login" onClick={() => navigate("/cpf")}>ENTRAR</button>
+        {error && <p className="error-message">{error}</p>}
 
         <p className="link-cadastro">
           <a href="/cadastro-profissional">CADASTRAR COMO PROFISSIONAL DE SAÚDE</a>

@@ -8,6 +8,6 @@ const vacinaController = require('../controllers/vacinaController');
 router.post('/cadastrar', vacinaController.cadastrarVacina);
 
 // Rota para consultar o calendário de vacinação de um usuário 
-router.get('/:usuarioId', vacinaController.consultarVacinas);
+router.get('/:cpf', vacinaController.consultarVacinas);
 
 module.exports = router;

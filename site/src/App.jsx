@@ -5,6 +5,7 @@ import Cpf from "./pages/cpf";
 import CadastroVacina from './pages/cadastroVacinacao';
 import CalendarioVacinacao from './pages/calendarioVacinacao';
 import RelatorioVacinacao from './pages/relatorioVacinacao';
+import CadastroPaciente from './pages/cadastroPaciente';
 
 function App() {
   return (
@@ -16,10 +17,7 @@ function App() {
         <Route path="/cadastro-vacinacao" element={<CadastroVacina />} />
         <Route path="/calendario-vacinacao" element={<CalendarioVacinacao/>} />
         <Route path="/relatorio-vacinacao" element={<RelatorioVacinacao/>} />
-
-
-
-        {/* Rotas para dashboards viriam aqui */}
+        <Route path="/cadastro-paciente" element={<CadastroPaciente/>} />
       </Routes>
     </Router>
   );
