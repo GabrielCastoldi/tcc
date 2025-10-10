@@ -13,10 +13,6 @@ export default function CalendarioVacinacao() {
     }
   }, [location.state]);
 
-  if (!paciente) {
-    return <div>Carregando dados do paciente...</div>;
-  }
-
   const handleTrocarPaciente = () => {
     navigate('/cpf');
   };
