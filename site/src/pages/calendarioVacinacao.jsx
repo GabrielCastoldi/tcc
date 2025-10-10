@@ -47,32 +47,11 @@ export default function CalendarioVacinacao() {
 
         <div className="calendario-direita">
           <h2>VACINAS EM ATRASO:</h2>
-          {paciente.atrasadas && paciente.atrasadas.length > 0 ? (
-            <ul>
-              {paciente.atrasadas.map((vacina, index) => (
-                <li key={index}>
-                  {vacina.nome_vacina} - Dose: {vacina.dose} - Prevista para: {vacina.proxima_dose_data}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>Nenhuma vacina em atraso.</p>
-          )}
-
+          
           <hr className="divisor" />
 
           <h2>TODAS AS VACINAS:</h2>
-          {paciente.calendario && paciente.calendario.length > 0 ? (
-            <ul>
-              {paciente.calendario.map((vacina, index) => (
-                <li key={index}>
-                  {vacina.data_aplicacao ? vacina.data_aplicacao : 'Agendada'} - {vacina.nome_vacina} ({vacina.dose}) - Status: {vacina.status}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>{paciente.message || 'Nenhuma vacina encontrada.'}</p>
-          )}
+      
         </div>
       </div>
     </div>
