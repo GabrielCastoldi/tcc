@@ -88,7 +88,7 @@ export default function CadastroProfissional() {
             type="number"
             name="idade"
             placeholder="Idade"
-            value={form.idade === null ? '' : form.idade}
+            value={form.idade}
             onChange={handleChange}
             required
           />
