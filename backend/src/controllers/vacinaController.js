@@ -19,9 +19,10 @@ exports.cadastrarVacina = async (req, res) => {
 
         // Se houver próxima dose, agenda
         if (proxima_dose_data) {
+            const proximaDose = parseInt(dose) + 1;
             await pool.query(
-                'INSERT INTO vacinas (paciente_cpf, nome_vacina, proxima_dose_data, status) VALUES (?, ?, ?, ?)',
-                [cpf, nome_vacina, proxima_dose_data, 'AGENDADA']
+                'INSERT INTO vacinas (paciente_cpf, nome_vacina, dose, proxima_dose_data, status) VALUES (?, ?, ?, ?, ?)',
+                [cpf, nome_vacina, proximaDose, proxima_dose_data, 'AGENDADA']
             );
         }
 

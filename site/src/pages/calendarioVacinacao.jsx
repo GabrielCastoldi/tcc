@@ -13,6 +13,8 @@ export default function CalendarioVacinacao() {
   const [dataAtual, setDataAtual] = useState('');
   const [vacinas, setVacinas] = useState([]);
   const [atrasadas, setAtrasadas] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
   const { cpf } = useParams();
 
@@ -31,6 +33,12 @@ export default function CalendarioVacinacao() {
     navigate('/');
   };
 
+  const formatarData = (dataISO) => {
+    if (!dataISO) return '---';
+    const data = new Date(dataISO);
+    return data.toLocaleDateString('pt-BR', { timeZone: 'UTC' });
+  };
+
   const fetchVacinas = async () => {
     try {
       const response = await fetch(`http://localhost:3333/api/vacinas/${cpf}`);
@@ -44,9 +52,10 @@ export default function CalendarioVacinacao() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+    setError('');
+    setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:3333/api/vacinas/cadastrar', {
+      await fetch('http://localhost:3333/api/vacinas/cadastrar', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -61,13 +70,12 @@ export default function CalendarioVacinacao() {
           posto_saude: posto
         }),
       });
-  
-      const data = await response.json();
-      alert(data.message);
-      fetchVacinas(); // Atualiza a lista após cadastrar
+      fetchVacinas();
     } catch (error) {
-      alert('Erro ao cadastrar');
+      setError('Erro ao cadastrar');
       console.error('Erro ao cadastrar', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -137,7 +145,12 @@ export default function CalendarioVacinacao() {
             />
           </div>
 
-          <button type="submit" className="btn-vacinacao">CADASTRAR</button>
+          <button type="submit" className="btn-vacinacao" disabled={isLoading}>
+            {isLoading ? 'CADASTRANDO...' : 'CADASTRAR'}
+          </button>
+
+          {error && <p className="error-message">{error}</p>}
+
         </form>
         </div>
 
@@ -147,7 +160,7 @@ export default function CalendarioVacinacao() {
             {atrasadas.length > 0 ? (
               atrasadas.map((v) => (
                 <li key={v.id}>
-                  {v.nome_vacina} - Dose: {v.dose || '---'} - Prevista para: {v.proxima_dose_data}
+                  {v.nome_vacina} - Dose {v.dose} - Agendada para {formatarData(v.proxima_dose_data)}
                 </li>
               ))
             ) : (
@@ -161,7 +174,7 @@ export default function CalendarioVacinacao() {
           {vacinas.length > 0 ? (
             vacinas.map((v) => (
               <li key={v.id}>
-                {v.nome_vacina} - {v.status} - Aplicada em: {v.data_aplicacao || '---'}
+                {v.nome_vacina} - Dose {v.dose || '---'} - {v.status} - {v.status === 'APLICADA' ? `Aplicada em ${formatarData(v.data_aplicacao)}` : `Agendada para ${formatarData(v.proxima_dose_data)}`}
               </li>
             ))
           ) : (
