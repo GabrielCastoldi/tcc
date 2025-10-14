@@ -78,7 +78,7 @@ export default function Cpf() {
         </div>
 
             {error && <p className="error-message">{error}</p>}
-        <button className="btn-cpf" type="submit" disabled={isLoading} onClick={handleSubmit}>
+        <button className="btn-cpf" disabled={isLoading} onClick={handleSubmit}>
               {isLoading ? 'BUSCANDO...' : 'BUSCAR'}
             </button>
       </div>
