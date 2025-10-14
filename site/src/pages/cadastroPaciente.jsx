@@ -7,11 +7,8 @@ export default function CadastroProfissional() {
   const [form, setForm] = useState({
     nome: '',
     cpf: '',
-    coren: '',
     telefone: '',
-    codigo: '',
-    senha: '',
-    confirmarSenha: '',
+    idade: '', 
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -23,28 +20,27 @@ export default function CadastroProfissional() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(''); 
-    setIsLoading(true); 
+    setError('');
+    setIsLoading(true);
 
-    if (form.senha !== form.confirmarSenha) {
-      setError('A senha e a confirmação de senha não coincidem.');
+    const idadeNum = parseInt(form.idade, 10);
+    if (isNaN(idadeNum) || idadeNum < 0 || idadeNum > 120) {
+      setError('Insira uma idade válida entre 0 e 120.');
       setIsLoading(false);
       return;
     }
 
-    const { confirmarSenha, ...dadosParaEnvio } = form;
-
     try {
-      const response = await fetch('http://localhost:3333/api/auth/cadastrar-enfermeira', {
+      const response = await fetch('http://localhost:3333/api/auth/cadastrar-paciente', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(dadosParaEnvio),
+        body: JSON.stringify({ ...form, idade: idadeNum }),
       });
 
       if (response.ok) {
-        navigate('/');
+        navigate('/cpf');
       } else {
         const data = await response.json();
         setError(data.message || 'Erro ao cadastrar. Tente novamente.');
@@ -53,7 +49,7 @@ export default function CadastroProfissional() {
       setError('Não foi possível conectar ao servidor. Tente mais tarde.');
       console.error('Erro na requisição:', err);
     } finally {
-      setIsLoading(false); 
+      setIsLoading(false);
     }
   };
 
@@ -70,7 +66,7 @@ export default function CadastroProfissional() {
       </div>
 
       <div className="cadastro-direita">
-        <h2>CRIAR UMA CONTA</h2>
+        <h2>CADASTRAR UM PACIENTE</h2>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -89,10 +85,10 @@ export default function CadastroProfissional() {
             required
           />
           <input
-            type="text"
-            name="coren"
-            placeholder="Nº Coren"
-            value={form.coren}
+            type="number"
+            name="idade"
+            placeholder="Idade"
+            value={form.idade}
             onChange={handleChange}
             required
           />
@@ -104,31 +100,7 @@ export default function CadastroProfissional() {
             onChange={handleChange}
             required
           />
-          <input
-            type="text"
-            name="codigo"
-            placeholder="Código de acesso"
-            value={form.codigo}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="password"
-            name="senha"
-            placeholder="Senha"
-            value={form.senha}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="password"
-            name="confirmarSenha"
-            placeholder="Confirmação de senha"
-            value={form.confirmarSenha}
-            onChange={handleChange}
-            required
-          />
-
+          
           <button type="submit" className="btn-cadastrar" disabled={isLoading}>
             {isLoading ? 'CADASTRANDO...' : 'CADASTRAR'}
           </button>
