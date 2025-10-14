@@ -4,11 +4,11 @@
 echo "Starting backend and frontend..."
 
 # Start backend in background
-(cd backend && npm run dev) &
+(cd backend && npm install&& npm run dev) &
 BACKEND_PID=$!
 
 # Start frontend in background  
-(cd site && npm run dev) &
+(cd site && npm install && npm run dev) &
 FRONTEND_PID=$!
 
 echo "Backend PID: $BACKEND_PID"
