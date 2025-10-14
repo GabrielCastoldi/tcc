@@ -2,22 +2,26 @@ const pool = require('../config/database');
 
 // Função para cadastrar vacina 
 exports.cadastrarVacina = async (req, res) => {
-    const { usuario_id, nome_vacina, lote, dose, data_aplicacao, proxima_dose_data, posto_saude } = req.body;
+    const { cpf, nome_vacina, lote, dose, data_aplicacao, proxima_dose_data, posto_saude } = req.body;
 
     try {
-        const status = proxima_dose_data ? 'AGENDADA' : 'APLICADA';
+        // Verifica se o paciente existe
+        const [pacientes] = await pool.query('SELECT id FROM pacientes WHERE cpf = ?', [cpf]);
+        if (pacientes.length === 0) {
+            return res.status(404).json({ message: 'Paciente não encontrado.' });
+        }
 
-        // Cadastra a vacina aplicada
+        // Sempre registra a dose aplicada
         await pool.query(
-            'INSERT INTO vacinas (usuario_id, nome_vacina, lote, dose, data_aplicacao, posto_saude, status) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [usuario_id, nome_vacina, lote, dose, data_aplicacao, posto_saude, 'APLICADA']
+            'INSERT INTO vacinas (paciente_cpf, nome_vacina, lote, dose, data_aplicacao, posto_saude, status) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [cpf, nome_vacina, lote, dose, data_aplicacao, posto_saude, 'APLICADA']
         );
-        
+
         // Se houver próxima dose, agenda
-        if(proxima_dose_data) {
+        if (proxima_dose_data) {
             await pool.query(
-                'INSERT INTO vacinas (usuario_id, nome_vacina, proxima_dose_data, status) VALUES (?, ?, ?, ?)',
-                [usuario_id, nome_vacina, proxima_dose_data, 'AGENDADA']
+                'INSERT INTO vacinas (paciente_cpf, nome_vacina, proxima_dose_data, status) VALUES (?, ?, ?, ?)',
+                [cpf, nome_vacina, proxima_dose_data, 'AGENDADA']
             );
         }
 
@@ -39,9 +43,9 @@ exports.consultarVacinas = async (req, res) => {
         }
 
         const [vacinas] = await pool.query(
-    'SELECT * FROM vacinas WHERE paciente_cpf = ? ORDER BY data_aplicacao DESC',
-    [cpf]
-);
+            'SELECT * FROM vacinas WHERE paciente_cpf = ? ORDER BY data_aplicacao DESC',
+            [cpf]
+        );
 
         if (vacinas.length === 0) {
             return res.status(200).json({
