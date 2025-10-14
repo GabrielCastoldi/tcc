@@ -16,6 +16,7 @@ function App() {
         <Route path="/cpf" element={<Cpf />} />
         <Route path="/cadastro-vacinacao" element={<CadastroVacina />} />
         <Route path="/calendario-vacinacao" element={<CalendarioVacinacao/>} />
+        <Route path="/:cpf/calendario" element={<CalendarioVacinacao/>} />
         <Route path="/relatorio-vacinacao" element={<RelatorioVacinacao/>} />
         <Route path="/cadastro-paciente" element={<CadastroPaciente/>} />
       </Routes>

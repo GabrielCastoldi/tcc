@@ -20,15 +20,12 @@ export default function Cpf() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`http://localhost:3333/api/vacinas/${cpf}`, {
+      const response = await fetch(`http://localhost:3333/api/pacientes/encontrar-paciente/${cpf}`, {
         method: 'GET',
       });
 
       if (response.ok) {
-        const pacienteData = await response.json();
-        
-
-        navigate('/calendario-vacinacao', { state: { paciente: pacienteData } });
+        navigate(`/${cpf}/calendario`);
       } else {
         const data = await response.json();
         setError(data.message || 'Erro ao procurar. Tente novamente.');

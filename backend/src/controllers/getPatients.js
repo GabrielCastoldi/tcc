@@ -4,7 +4,7 @@ const pool = require('../config/database');
 
 // Função de procurar paciente 
 exports.encontrarPaciente = async (req, res) => {
-    const { cpf } = req.body;
+    const { cpf } = req.params;
     try {
         const [rows] = await pool.query('SELECT * FROM pacientes WHERE cpf = ?', [cpf]);
 

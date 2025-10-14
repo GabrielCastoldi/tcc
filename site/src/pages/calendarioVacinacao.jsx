@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from 'react';
+
 import '../css/CalendarioVacinacao.css';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function CalendarioVacinacao() {
-  const location = useLocation();
+
   const navigate = useNavigate();
-  const [paciente, setPaciente] = useState(null);
+  const { cpf } = useParams();
 
-  useEffect(() => {
-    if (location.state && location.state.paciente) {
-      setPaciente(location.state.paciente);
-    }
-  }, [location.state]);
-
+  console.log('CPF da URL:', cpf);
   const handleTrocarPaciente = () => {
     navigate('/cpf');
   };
